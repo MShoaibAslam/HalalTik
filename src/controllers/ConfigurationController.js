@@ -9,12 +9,12 @@ const getConfigurations = asyncHandler(async (req, res, next) => {
 
   if (configurations === "") {
     res.status(404).json({
-      success: false,
+      status: false,
       message: "configuration not found",
     });
   } else {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "configuration found",
       data: configurations,
     });
@@ -24,13 +24,13 @@ const createConfiguration = asyncHandler(async (req, res, next) => {
   const configuration = await Configuration.create(req.body);
   if (configuration) {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "configuration created successfully",
       data: configuration,
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: "internal server error",
     });
   }
@@ -45,15 +45,13 @@ const getConfiguration = asyncHandler(async (req, res, next) => {
   if (!configuration) {
     res
       .status(200)
-      .json({ success: false, message: "configuration not found " });
+      .json({ status: false, message: "configuration not found " });
   } else {
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "configuration found ",
-        data: configuration,
-      });
+    res.status(200).json({
+      status: true,
+      message: "configuration found ",
+      data: configuration,
+    });
   }
 });
 
@@ -67,18 +65,18 @@ const updateConfiguration = asyncHandler(async (req, res, next) => {
     ).then(async (configurations) => {
       if (configurations) {
         res.status(200).json({
-          success: true,
+          status: true,
           message: `configuration updated `,
         });
       } else {
         res
           .status(404)
-          .json({ success: false, message: `internal server error` });
+          .json({ status: false, message: `internal server error` });
       }
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: `No configuration found `,
     });
   }
@@ -89,13 +87,13 @@ const deleteConfiguration = asyncHandler(async (req, res, next) => {
   if (configuration) {
     await Configuration.findByIdAndDelete(req.params.id).then(async () => {
       res.status(200).json({
-        success: true,
+        status: true,
         message: `Delete configuration `,
       });
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: `configuration not found `,
     });
   }
@@ -105,12 +103,12 @@ const deleteallConfigurations = asyncHandler(async (req, res, next) => {
   const configurations = await Configuration.deleteMany({ _id: { $in: id } });
   if (configurations) {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "all configurations deleted",
     });
   } else {
     res.status(200).json({
-      success: false,
+      status: false,
       message: "internal server error",
     });
   }

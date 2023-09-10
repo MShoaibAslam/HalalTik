@@ -8,6 +8,9 @@ const devEnv = {
   mongoUrl: process.env.MONGO_URL,
   mongoUrlRemote: process.env.MONGO_URL_REMOTE,
   timezoneKey: process.env.TIMEZONE_KEY,
+  JWT_SECRET: process.env.JWT_SECRET_KEY,
+  Google_Client_Id: process.env.GOOGLE_Client_ID,
+  Google_Client_Secret: process.env.GOOGLE_Client_secret,
 };
 
 module.exports = devEnv;

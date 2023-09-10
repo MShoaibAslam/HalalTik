@@ -17,11 +17,14 @@ const healthcheckRoute = require("./routes/healthcheck");
 
 const env = require("./configs/index");
 const logger = require("./middleware/logger");
+const authMiddleware = require("./middleware/verifyToken");
 const categoriesRoutes = require("./routes/CategoriesRoutes");
 const citiesRoutes = require("./routes/CitiesRoutes");
 const companyRoutes = require("./routes/CompanyRoutes");
 const configurationRoutes = require("./routes/ConfigurationRoutes");
 const customerRoutes = require("./routes/CustomerRoutes");
+const userRoutes = require("./routes/UserRoutes");
+const authRoutes = require("./routes/AuthRoutes");
 
 const url = env.mongoUrl;
 
@@ -82,12 +85,17 @@ app.use((req, res, next) => {
   logger.info(`[${req.method}] ${req.originalUrl}`);
   next();
 });
+app.use("/api/v1/halaltik/auth", authRoutes);
+
+// app.use(authMiddleware.verifyToken);
+
 app.use("/api/v1/halaltik/healthcheck", healthcheckRoute);
 app.use("/api/v1/halaltik/categories", categoriesRoutes);
 app.use("/api/v1/halaltik/cities", citiesRoutes);
 app.use("/api/v1/halaltik/company", companyRoutes);
 app.use("/api/v1/halaltik/configuration", configurationRoutes);
 app.use("/api/v1/halaltik/customer", customerRoutes);
+app.use("/api/v1/halaltik/user", userRoutes);
 app.use((req, res, next) => {
   const err = new Error();
   err.status = 404;

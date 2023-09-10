@@ -6,12 +6,12 @@ const getCustomers = asyncHandler(async (req, res, next) => {
 
   if (customers === "") {
     res.status(404).json({
-      success: false,
+      status: false,
       message: "customer not found",
     });
   } else {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "customer found",
       data: customers,
     });
@@ -21,13 +21,13 @@ const createCustomer = asyncHandler(async (req, res, next) => {
   const customer = await Customer.create(req.body);
   if (customer) {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "customer created successfully",
       data: customer,
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: "internal server error",
     });
   }
@@ -40,11 +40,11 @@ const getCustomer = asyncHandler(async (req, res, next) => {
     .populate("category")
     .populate("stateId");
   if (!customer) {
-    res.status(200).json({ success: false, message: "customer not found " });
+    res.status(200).json({ status: false, message: "customer not found " });
   } else {
     res
       .status(200)
-      .json({ success: true, message: "customer found ", data: customer });
+      .json({ status: true, message: "customer found ", data: customer });
   }
 });
 
@@ -58,18 +58,18 @@ const updateCustomer = asyncHandler(async (req, res, next) => {
     ).then(async (customers) => {
       if (customers) {
         res.status(200).json({
-          success: true,
+          status: true,
           message: `customer updated `,
         });
       } else {
         res
           .status(404)
-          .json({ success: false, message: `internal server error` });
+          .json({ status: false, message: `internal server error` });
       }
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: `No customer found `,
     });
   }
@@ -80,13 +80,13 @@ const deleteCustomer = asyncHandler(async (req, res, next) => {
   if (customer) {
     await Customer.findByIdAndDelete(req.params.id).then(async () => {
       res.status(200).json({
-        success: true,
+        status: true,
         message: `Delete customer `,
       });
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: `customer not found `,
     });
   }
@@ -96,12 +96,12 @@ const deleteallCustomers = asyncHandler(async (req, res, next) => {
   const customers = await Customer.deleteMany({ _id: { $in: id } });
   if (customers) {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "all customers deleted",
     });
   } else {
     res.status(200).json({
-      success: false,
+      status: false,
       message: "internal server error",
     });
   }
