@@ -156,6 +156,12 @@ const login = asyncHandler(async (req, res, next) => {
     user: userReturn,
   });
 });
+const successMessage = asyncHandler(async (req, res, next) => {
+  res.status(200).json({
+    status: true,
+    message: "successfully login",
+  });
+});
 module.exports = {
   getUsers,
   createUser,
@@ -164,4 +170,5 @@ module.exports = {
   deleteUser,
   deleteallUsers,
   login,
+  successMessage,
 };
