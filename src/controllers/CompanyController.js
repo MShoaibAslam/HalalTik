@@ -9,12 +9,12 @@ const getCompanys = asyncHandler(async (req, res, next) => {
 
   if (companys === "") {
     res.status(404).json({
-      success: false,
+      status: false,
       message: "company not found",
     });
   } else {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "company found",
       data: companys,
     });
@@ -24,13 +24,13 @@ const createCompany = asyncHandler(async (req, res, next) => {
   const company = await Company.create(req.body);
   if (company) {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "company created successfully",
       data: company,
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: "internal server error",
     });
   }
@@ -43,11 +43,11 @@ const getCompany = asyncHandler(async (req, res, next) => {
     .populate("category")
     .populate("stateId");
   if (!company) {
-    res.status(200).json({ success: false, message: "company not found " });
+    res.status(200).json({ status: false, message: "company not found " });
   } else {
     res
       .status(200)
-      .json({ success: true, message: "company found ", data: company });
+      .json({ status: true, message: "company found ", data: company });
   }
 });
 
@@ -61,18 +61,18 @@ const updateCompany = asyncHandler(async (req, res, next) => {
     ).then(async (companys) => {
       if (companys) {
         res.status(200).json({
-          success: true,
+          status: true,
           message: `company updated `,
         });
       } else {
         res
           .status(404)
-          .json({ success: false, message: `internal server error` });
+          .json({ status: false, message: `internal server error` });
       }
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: `No company found `,
     });
   }
@@ -83,13 +83,13 @@ const deleteCompany = asyncHandler(async (req, res, next) => {
   if (company) {
     await Company.findByIdAndDelete(req.params.id).then(async () => {
       res.status(200).json({
-        success: true,
+        status: true,
         message: `Delete company `,
       });
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: `company not found `,
     });
   }
@@ -99,12 +99,12 @@ const deleteallCompanys = asyncHandler(async (req, res, next) => {
   const companys = await Company.deleteMany({ _id: { $in: id } });
   if (companys) {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "all companys deleted",
     });
   } else {
     res.status(200).json({
-      success: false,
+      status: false,
       message: "internal server error",
     });
   }

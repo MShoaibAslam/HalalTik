@@ -2,5 +2,7 @@
     "dotenv.enableAutocloaking": false,
     "cSpell.words": [
         "actionsteps"
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/2f895a61-f506-4822-bf81-00ee71e3d7c4/resourceGroups/HalaltikApp2/providers/Microsoft.Web/sites/HalaltikApp",
+    "appService.deploySubpath": "."
 }

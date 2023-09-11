@@ -6,12 +6,12 @@ const getCategoriess = asyncHandler(async (req, res, next) => {
 
   if (categoriess === "") {
     res.status(404).json({
-      success: false,
+      status: false,
       message: "categories not found",
     });
   } else {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "categories found",
       data: categoriess,
     });
@@ -21,13 +21,13 @@ const createCategories = asyncHandler(async (req, res, next) => {
   const categories = await Categories.create(req.body);
   if (categories) {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "categories created successfully",
       data: categories,
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: "internal server error",
     });
   }
@@ -37,11 +37,11 @@ const getCategories = asyncHandler(async (req, res, next) => {
   const { id: categoriesId } = req.params;
   const categories = await Categories.findOne({ _id: req.params.id });
   if (!categories) {
-    res.status(200).json({ success: false, message: "categories not found " });
+    res.status(200).json({ status: false, message: "categories not found " });
   } else {
     res
       .status(200)
-      .json({ success: true, message: "categories found ", data: categories });
+      .json({ status: true, message: "categories found ", data: categories });
   }
 });
 
@@ -55,18 +55,18 @@ const updateCategories = asyncHandler(async (req, res, next) => {
     ).then(async (categoriess) => {
       if (categoriess) {
         res.status(200).json({
-          success: true,
+          status: true,
           message: `categories updated `,
         });
       } else {
         res
           .status(404)
-          .json({ success: false, message: `internal server error` });
+          .json({ status: false, message: `internal server error` });
       }
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: `No categories found `,
     });
   }
@@ -77,13 +77,13 @@ const deleteCategories = asyncHandler(async (req, res, next) => {
   if (categories) {
     await Categories.findByIdAndDelete(req.params.id).then(async () => {
       res.status(200).json({
-        success: true,
+        status: true,
         message: `Delete categories `,
       });
     });
   } else {
     res.status(404).json({
-      success: false,
+      status: false,
       message: `categories not found `,
     });
   }
@@ -93,12 +93,12 @@ const deleteallCategoriess = asyncHandler(async (req, res, next) => {
   const categoriess = await Categories.deleteMany({ _id: { $in: id } });
   if (categoriess) {
     res.status(200).json({
-      success: true,
+      status: true,
       message: "all categoriess deleted",
     });
   } else {
     res.status(200).json({
-      success: false,
+      status: false,
       message: "internal server error",
     });
   }
