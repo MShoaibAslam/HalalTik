@@ -40,7 +40,7 @@ const getCustomer = asyncHandler(async (req, res, next) => {
     .populate("category")
     .populate("stateId");
   if (!customer) {
-    res.status(200).json({ status: false, message: "customer not found " });
+    res.status(404).json({ status: false, message: "customer not found " });
   } else {
     res
       .status(200)
@@ -100,7 +100,7 @@ const deleteallCustomers = asyncHandler(async (req, res, next) => {
       message: "all customers deleted",
     });
   } else {
-    res.status(200).json({
+    res.status(404).json({
       status: false,
       message: "internal server error",
     });

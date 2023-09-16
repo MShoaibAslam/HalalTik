@@ -30,10 +30,10 @@ const configurationRoutes = require("./routes/ConfigurationRoutes");
 const customerRoutes = require("./routes/CustomerRoutes");
 const userRoutes = require("./routes/UserRoutes");
 const authRoutes = require("./routes/AuthRoutes");
+const productRoutes = require("./routes/ProductRoutes");
 const User = require("./models/UserModel");
 
 const url = env.mongoUrl;
-
 const connect = mongoose.connect(url);
 
 connect
@@ -97,7 +97,7 @@ passport.use(
     {
       clientID: "env.Facebook_Client_Id",
       clientSecret: "env.Facebook_Client_Secret",
-      callbackURL: "http://localhost:3500/auth/facebook/callback",
+      callbackURL: `${process.env.BASE_URL}/auth/facebook/callback`,
     },
     (accessToken, refreshToken, profile, done) => {
       // save the user
@@ -113,7 +113,7 @@ passport.use(
     {
       clientID: env.Google_Client_Id,
       clientSecret: env.Google_Client_Secret,
-      callbackURL: "http://localhost:3500/auth/google/callback",
+      callbackURL: `${process.env.BASE_URL}/auth/google/callback`,
     },
     async (accessToken, refreshToken, profile, done) => {
       // save that user
@@ -141,7 +141,7 @@ passport.use(
     {
       consumerKey: env.Twitter_Client_Id,
       consumerSecret: env.Twitter_Client_Secret,
-      callbackURL: "http://localhost:3500/auth/twitter/callback",
+      callbackURL: `${process.env.BASE_URL}/auth/twitter/callback`,
     },
     async (token, tokenSecret, profile, done) => {
       // For example, save the user to your database and call done(null, user);
@@ -231,6 +231,7 @@ app.use("/api/v1/halaltik/company", companyRoutes);
 app.use("/api/v1/halaltik/configuration", configurationRoutes);
 app.use("/api/v1/halaltik/customer", customerRoutes);
 app.use("/api/v1/halaltik/user", userRoutes);
+app.use("/api/v1/halaltik/product", productRoutes);
 
 app.use((req, res, next) => {
   const err = new Error();

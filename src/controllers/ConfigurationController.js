@@ -44,7 +44,7 @@ const getConfiguration = asyncHandler(async (req, res, next) => {
     .populate("stateId");
   if (!configuration) {
     res
-      .status(200)
+      .status(404)
       .json({ status: false, message: "configuration not found " });
   } else {
     res.status(200).json({
@@ -107,7 +107,7 @@ const deleteallConfigurations = asyncHandler(async (req, res, next) => {
       message: "all configurations deleted",
     });
   } else {
-    res.status(200).json({
+    res.status(404).json({
       status: false,
       message: "internal server error",
     });

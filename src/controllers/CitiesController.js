@@ -37,7 +37,7 @@ const getCities = asyncHandler(async (req, res, next) => {
   const { id: citiesId } = req.params;
   const cities = await Cities.findOne({ _id: req.params.id });
   if (!cities) {
-    res.status(200).json({ status: false, message: "cities not found " });
+    res.status(404).json({ status: false, message: "cities not found " });
   } else {
     res
       .status(200)
@@ -97,7 +97,7 @@ const deleteallCitiess = asyncHandler(async (req, res, next) => {
       message: "all citiess deleted",
     });
   } else {
-    res.status(200).json({
+    res.status(404).json({
       status: false,
       message: "internal server error",
     });

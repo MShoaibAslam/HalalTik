@@ -37,7 +37,7 @@ const getCategories = asyncHandler(async (req, res, next) => {
   const { id: categoriesId } = req.params;
   const categories = await Categories.findOne({ _id: req.params.id });
   if (!categories) {
-    res.status(200).json({ status: false, message: "categories not found " });
+    res.status(404).json({ status: false, message: "categories not found " });
   } else {
     res
       .status(200)
@@ -97,7 +97,7 @@ const deleteallCategoriess = asyncHandler(async (req, res, next) => {
       message: "all categoriess deleted",
     });
   } else {
-    res.status(200).json({
+    res.status(404).json({
       status: false,
       message: "internal server error",
     });

@@ -43,7 +43,7 @@ const getCompany = asyncHandler(async (req, res, next) => {
     .populate("category")
     .populate("stateId");
   if (!company) {
-    res.status(200).json({ status: false, message: "company not found " });
+    res.status(404).json({ status: false, message: "company not found " });
   } else {
     res
       .status(200)
@@ -103,7 +103,7 @@ const deleteallCompanys = asyncHandler(async (req, res, next) => {
       message: "all companys deleted",
     });
   } else {
-    res.status(200).json({
+    res.status(404).json({
       status: false,
       message: "internal server error",
     });

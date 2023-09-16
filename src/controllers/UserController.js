@@ -25,9 +25,11 @@ const createUser = asyncHandler(async (req, res, next) => {
   req.body.password = await bcrypt.hash(req.body.password, salt);
   if (req.body.gender) {
     if (
-      !(req.body.gender === "MALE") ||
-      req.body.gender === "FEMALE" ||
-      req.body.gender === "OTHER"
+      !(
+        req.body.gender === "MALE" ||
+        req.body.gender === "FEMALE" ||
+        req.body.gender === "OTHER"
+      )
     ) {
       return res.status(400).json({
         status: false,
@@ -54,7 +56,7 @@ const getUser = asyncHandler(async (req, res, next) => {
   const { id: userId } = req.params;
   const user = await User.findOne({ _id: req.params.id });
   if (!user) {
-    res.status(200).json({ status: false, message: "user not found " });
+    res.status(404).json({ status: false, message: "user not found " });
   } else {
     res.status(200).json({ status: true, message: "user found ", data: user });
   }
@@ -116,7 +118,7 @@ const deleteallUsers = asyncHandler(async (req, res, next) => {
       message: "all users deleted",
     });
   } else {
-    res.status(200).json({
+    res.status(404).json({
       status: false,
       message: "internal server error",
     });
@@ -135,7 +137,7 @@ const login = asyncHandler(async (req, res, next) => {
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     return res
-      .status(200)
+      .status(404)
       .json({ status: false, message: "Invalid email or password" });
   }
 
